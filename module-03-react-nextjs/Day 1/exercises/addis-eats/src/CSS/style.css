@@ -1,0 +1,26 @@
+.header{
+    color: aliceblue;
+    background-color: rgb(44, 28, 28);
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    padding: 15px;
+}
+.dish{
+    border: 2px rgb(44, 28, 28) solid;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+.card-container{
+    font-family: 'Courier New', Courier, monospace;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+
+}
+
+@media(min-width: 600px)  {
+    .card-container{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
