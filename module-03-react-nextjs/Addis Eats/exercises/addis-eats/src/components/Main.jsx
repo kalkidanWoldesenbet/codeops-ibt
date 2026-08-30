@@ -1,54 +1,87 @@
-import React from 'react'
-import Dish from './Dish'
+import { useState } from "react";
+import menu from "../data";
+import Dish from "./Dish";
+import CategoryBar from "./CategoryBar";
+import DeliveryForm from "./DeliveryForm";
+
+const mainCat = menu.filter(
+  (item) => item.category === "Main Course"
+);
+
+const sideCat = menu.filter(
+  (item) => item.category === "Side Dish"
+);
+
+const bevCat = menu.filter(
+  (item) => item.category === "Beverage"
+);
 
 function Main() {
-    const menu = [
-        {id:1,name:"Doro wot", price: "400 ",spicy:true,category:"Side Dish"},
-        {id:2,name:"Kitfo", price: "500 ",spicy:false, category:"Main Course"},
-        {id:3,name:"Pasta", price: "250 ",spicy:false, category:"Main Course"},
-    ]
+  // Exercise 2 & 3
+  const [category, setCategory] = useState("All");
 
-    const mainCat = menu.filter(
-      (item)=> item.category === "Main Course"
-    )
+  // Exercise 5
+  const [total, setTotal] = useState(0);
 
-    const sideCat = menu.filter(
-      (item)=> item.category === "Side Dish"
-    )
+  // Exercise 4
+  const shown =
+    category === "All"
+      ? menu
+      : category === "Main Course"
+        ? mainCat
+        : category === "Side Dish"
+          ? sideCat
+          : bevCat;
 
-    if(mainCat.length === 0 && sideCat.length === 0){
-      return <p>No dishes found.</p>
-    }
+  // Exercise 5
+  function addToOrder(price) {
+    setTotal(total + price);
+  }
+
+  // Exercise 4
+  if (shown.length === 0) {
+    return (
+      <div>
+        <h2>Addis Eats - Our Menu</h2>
+
+        <CategoryBar
+          selected={category}
+          onSelectCategory={setCategory}
+        />
+
+        <p>No dishes found.</p>
+
+        <h2>Total: {total} ETB</h2>
+
+        <DeliveryForm />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h2>Main Courses</h2>
-     <div className='card-container'>
-       
-       {
-       mainCat.map((item) => (
-         <Dish 
-           key={item.id} 
-           name={item.name} 
-           price={item.price} 
-           spicy={item.spicy}
-         />
-       ))}
-     </div>
-       <h2>Side Dishes</h2>
-     <div className='card-container'>
-       {
-         sideCat.map((item) =>(
-           <Dish
-             key={item.id} 
-             name={item.name} 
-             price={item.price} 
-             spicy={item.spicy} 
-           />
-         ))
-       }
+      <h2>Addis Eats - Our Menu</h2>
+
+      <CategoryBar
+        selected={category}
+        onSelectCategory={setCategory}
+      />
+
+      <div className="card-container">
+        {shown.map((item) => (
+          <Dish
+            key={item.id}
+            {...item}
+            onAdd={addToOrder}
+          />
+        ))}
       </div>
+
+      <h2>Total: {total} ETB</h2>
+
+      <DeliveryForm />
     </div>
-  )
+  );
 }
 
-export default Main
+export default Main;

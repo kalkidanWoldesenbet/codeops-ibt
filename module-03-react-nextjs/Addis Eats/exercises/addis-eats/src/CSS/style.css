@@ -18,6 +18,12 @@
     grid-template-columns: repeat(2,1fr);
 
 }
+h2{
+    font-family: 'Courier New', Courier, monospace;
+}
+button{
+    font-family: 'Courier New', Courier, monospace;
+}
 
 @media(min-width: 600px)  {
     .card-container{
