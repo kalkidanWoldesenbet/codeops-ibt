@@ -1,61 +1,41 @@
-import React from 'react'
-import menu from "../data"
-import Dish from './Dish'
-
+import { useState } from "react";
+import menu from "../data";
+import CategoryBar from "./CategoryBar";
+import DishList from "./DishList";
+import OrderForm from "./OrderForm";
 
 function Main() {
-  const mainCat = menu.filter(
-    (item) => item.category ==="Main Course"
-  );
-  const sideCat = menu.filter(
-    (item) => item.category ==="Side Dish"
-  );
-  const beverage = menu.filter(
-    (item) => item.category ==="Beverage"
-  );
+  const [category, setCategory] = useState("All");
+  const [total, setTotal] = useState(0);
 
-  if (
-      mainCat.length === 0 &&
-      sideCat.length === 0 &&
-      beverage.length === 0
-    ) {
-      return <p>No dishes found.</p>;
-    }
+  const shown =
+    category === "All"
+      ? menu
+      : menu.filter((item) => item.category === category);
+
+  function addToOrder(price) {
+    setTotal(total + price);
+  }
+
   return (
     <div>
-      <h2>Main Courses</h2>
-      <div className='card-container'>
-      {
-        mainCat.map((item) => (
-           <Dish key={item.id} 
-            {...item}
-            /> 
-        ))
-      }
-      </div>
-      <h2>Side Dishes</h2>
-      <div className='card-container'>
-        {
-          sideCat.map((item) => (
-             <Dish key={item.id} 
-              {...item}
-              /> 
-          ))
-        }
-      </div>
-      <h2>Beverages</h2>
-      <div className='card-container'>
-        {
-          beverage.map((item) => (
-             <Dish key={item.id} 
-              {...item}
-              /> 
-          ))
-        }
-      </div>
+      <h2>Addis Eats - Our Menu</h2>
+
+      <CategoryBar
+        selected={category}
+        onSelectCategory={setCategory}
+      />
+
+      <DishList
+        dishes={shown}
+        onAdd={addToOrder}
+      />
+
+      <h2>Total: {total} ETB</h2>
+
+      <OrderForm />
     </div>
-    
-  )
+  );
 }
 
-export default Main
+export default Main;

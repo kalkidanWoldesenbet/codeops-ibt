@@ -1,25 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import { useState } from 'react'
 import Card from './Card'
 
 function Dish({name, price, currency="ETB", spicy, category}) {
+  const [count,setCount]= useState(0);
+
+  function handleAdd(){
+    setCount(count +1);
+    ongamepaddisconnected(price);
+  }
   return (
     <div className='dish'>
       <Card>
-        <h3>{name}</h3>
+        <h3>{name} Quantity: {count}</h3>
         <p>{price} {currency}</p>
         <p>{category}</p>
         <p>{spicy && <em>Spicy</em> }</p>
+        <button onClick={handleAdd} className='add-button'>Add</button>
       </Card>
     </div>
   )
 }
 
-// Dish.PropTypes= {
-//   name:PropTypes.string.isRequired,
-//   price:PropTypes.number.isRequired,
-//   spicy:PropTypes.bool,
-//   currency:PropTypes.string,
-// };
+
 
 export default Dish
