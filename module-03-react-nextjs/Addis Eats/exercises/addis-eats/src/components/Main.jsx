@@ -3,6 +3,7 @@ import menu from "../data";
 import Dish from "./Dish";
 import CategoryBar from "./CategoryBar";
 import DeliveryForm from "./DeliveryForm";
+import { useEffect } from "react";
 
 const mainCat = menu.filter(
   (item) => item.category === "Main Course"
@@ -17,13 +18,13 @@ const bevCat = menu.filter(
 );
 
 function Main() {
-  // Exercise 2 & 3
+  
   const [category, setCategory] = useState("All");
-
-  // Exercise 5
   const [total, setTotal] = useState(0);
+  useEffect(() =>{
+    document.title = `${menu.length} dishes`;
+  }, [menu]);
 
-  // Exercise 4
   const shown =
     category === "All"
       ? menu
