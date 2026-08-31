@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import Card from './Card'
 
-function Dish({name, price, currency="ETB", spicy, category}) {
+function Dish({name, price, currency="ETB", spicy, category, onAdd}) {
   const [count,setCount]= useState(0);
 
   function handleAdd(){
     setCount(count +1);
-    ongamepaddisconnected(price);
+    onAdd(Number(price));
   }
   return (
     <div className='dish'>

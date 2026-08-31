@@ -19,7 +19,7 @@
     grid-template-columns: repeat(2,1fr);
 
 }
-.h2{
+h2{
     font-family: 'Courier New', Courier, monospace;
 }
 .add-button{

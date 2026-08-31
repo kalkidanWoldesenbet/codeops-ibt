@@ -1,12 +1,12 @@
 import Header from "./components/Header"
-import Main from "./components/Main"
+import Menu from "./components/Menu"
 import"./CSS/style.css"
 function App() {
 
   return (
     <>
       <Header/>
-      <Main/>
+      <Menu/>
     </>
   )
 }
