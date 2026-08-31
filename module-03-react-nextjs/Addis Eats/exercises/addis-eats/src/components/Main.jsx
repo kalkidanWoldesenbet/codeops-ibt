@@ -1,38 +1,37 @@
 import { useState } from "react";
-import menu from "../data";
 import Dish from "./Dish";
 import CategoryBar from "./CategoryBar";
 import DeliveryForm from "./DeliveryForm";
 import { useEffect } from "react";
 
-const mainCat = menu.filter(
-  (item) => item.category === "Main Course"
-);
 
-const sideCat = menu.filter(
-  (item) => item.category === "Side Dish"
-);
-
-const bevCat = menu.filter(
-  (item) => item.category === "Beverage"
-);
 
 function Main() {
   
   const [category, setCategory] = useState("All");
   const [total, setTotal] = useState(0);
+  const [menu, setMenu] = useState([]);
+
   useEffect(() =>{
     document.title = `${menu.length} dishes`;
   }, [menu]);
 
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/dishes.json");
+      const data = await response.json();
+
+      setMenu(data);
+    }
+    fetchData();
+  },[]);
+
   const shown =
     category === "All"
       ? menu
-      : category === "Main Course"
-        ? mainCat
-        : category === "Side Dish"
-          ? sideCat
-          : bevCat;
+      : menu.filter(
+        (item) => item.category === category
+      );
 
   // Exercise 5
   function addToOrder(price) {
