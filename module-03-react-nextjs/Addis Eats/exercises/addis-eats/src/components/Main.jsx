@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dish from "./Dish";
 import CategoryBar from "./CategoryBar";
 import DeliveryForm from "./DeliveryForm";
-import { useEffect } from "react";
+
 
 
 
@@ -21,9 +21,21 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/dishes.json");
-        const data = await response.json();
+        const res = await fetch("/dishes.json");
+        if(!res.ok){
+          throw new Error("Could not load the menu. Please try again.");
+        }
 
+        const contentType = res.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error(
+            "Could not load the menu. Please try again."
+          );
+        }
+
+        const data = await res.json();
+        
         setMenu(data);
       } catch (error) {
         setError(error);
