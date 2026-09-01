@@ -46,7 +46,7 @@ function Main() {
     }
 
     fetchData();
-  },[]);
+  },[category]);
 
   if(loading){
     return <p>Loading menu...</p>
