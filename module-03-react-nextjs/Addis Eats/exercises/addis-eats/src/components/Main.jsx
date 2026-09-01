@@ -19,9 +19,14 @@ function Main() {
   }, [menu]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchData() {
       try {
-        const res = await fetch("/dishes.json");
+        const res = await fetch("/dishes.json",{
+          signal: controller.signal,
+        });
+
         if(!res.ok){
           throw new Error("Could not load the menu. Please try again.");
         }
@@ -38,7 +43,9 @@ function Main() {
         
         setMenu(data);
       } catch (error) {
-        setError(error);
+        if (error.name !== "AbortError"){
+          setError(error);
+        }
       } finally {
         setLoading(false);
       }
@@ -46,6 +53,11 @@ function Main() {
     }
 
     fetchData();
+
+    return() =>{
+      controller.abort();
+    };
+
   },[category]);
 
   if(loading){
