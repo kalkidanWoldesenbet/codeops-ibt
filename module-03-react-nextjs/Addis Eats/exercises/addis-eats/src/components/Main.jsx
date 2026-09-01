@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Dish from "./Dish";
 import CategoryBar from "./CategoryBar";
 import DeliveryForm from "./DeliveryForm";
@@ -13,6 +13,18 @@ function Main() {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const searchRef = useRef(null);
+
+  // useEffect(() =>{
+  //   searchRef.current.focus();
+  // }, []);
+
+  useEffect(() => {
+    if (!loading && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [loading]);
 
   useEffect(() =>{
     document.title = `${menu.length} dishes`;
@@ -66,6 +78,8 @@ function Main() {
   if(error){
     return <p>Error loading menu: {error.message}</p>
   }
+
+  
   const shown =
     category === "All"
       ? menu
@@ -102,6 +116,11 @@ function Main() {
     <div>
       <h2>Addis Eats - Our Menu</h2>
 
+      <input
+        ref={searchRef}
+        type="text"
+        placeholder="Search dishes..."
+      />
       <CategoryBar
         selected={category}
         onSelectCategory={setCategory}
