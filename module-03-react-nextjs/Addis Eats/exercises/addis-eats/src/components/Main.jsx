@@ -11,6 +11,8 @@ function Main() {
   const [category, setCategory] = useState("All");
   const [total, setTotal] = useState(0);
   const [menu, setMenu] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() =>{
     document.title = `${menu.length} dishes`;
@@ -18,14 +20,28 @@ function Main() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("/dishes.json");
-      const data = await response.json();
+      try {
+        const response = await fetch("/dishes.json");
+        const data = await response.json();
 
-      setMenu(data);
+        setMenu(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+      
     }
+
     fetchData();
   },[]);
 
+  if(loading){
+    return <p>Loading menu...</p>
+  }
+  if(error){
+    return <p>Error loading menu: {error.message}</p>
+  }
   const shown =
     category === "All"
       ? menu
@@ -33,12 +49,12 @@ function Main() {
         (item) => item.category === category
       );
 
-  // Exercise 5
+  
   function addToOrder(price) {
     setTotal(total + price);
   }
 
-  // Exercise 4
+ 
   if (shown.length === 0) {
     return (
       <div>
