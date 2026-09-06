@@ -1,12 +1,16 @@
-import React from 'react'
+import { memo } from "react";
 
-function Dish({name, price}) {
+function Dish({ dish, onAdd }) {
   return (
-    <div className='dish'>
-      <h2>{name}</h2>
-      <p>{price}</p>
+    <div className="card">
+      <h3>{dish.name}</h3>
+      <p>{dish.price} ETB</p>
+
+      <button onClick={() => onAdd(dish)}>
+        Add
+      </button>
     </div>
-  )
+  );
 }
 
-export default Dish
+export default memo(Dish);
