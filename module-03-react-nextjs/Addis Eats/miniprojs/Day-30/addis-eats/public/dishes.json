@@ -19,13 +19,13 @@
   },
   {
     "id": 4,
-    "name": "Azifa",
+    "name": "Pasta",
     "price": 150,
     "category": "Side Dish"
   },
   {
     "id": 5,
-    "name": "Coffee",
+    "name": "Buna",
     "price": 100,
     "category": "Beverage"
   }
