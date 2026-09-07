@@ -43,12 +43,17 @@ function OrderStateDemo() {
       <h2>Order Demo</h2>
 
       <p>Items: {state.count}</p>
+
       <p>Total: {state.total} ETB</p>
+
       <p>{state.message}</p>
 
       <button
         onClick={() =>
-          dispatch({ type: "add", price: 100 })
+          dispatch({
+            type: "add",
+            price: 100,
+          })
         }
       >
         Add
@@ -56,14 +61,21 @@ function OrderStateDemo() {
 
       <button
         onClick={() =>
-          dispatch({ type: "remove", price: 100 })
+          dispatch({
+            type: "remove",
+            price: 100,
+          })
         }
       >
         Remove
       </button>
 
       <button
-        onClick={() => dispatch({ type: "clear" })}
+        onClick={() =>
+          dispatch({
+            type: "clear",
+          })
+        }
       >
         Clear
       </button>

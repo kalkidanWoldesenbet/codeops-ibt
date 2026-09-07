@@ -5,7 +5,7 @@ function ThemeButton() {
 
   return (
     <button onClick={toggleTheme}>
-      Theme: {theme}
+      {theme === "light" ? "Dark Mode" : "Light Mode"}
     </button>
   );
 }
