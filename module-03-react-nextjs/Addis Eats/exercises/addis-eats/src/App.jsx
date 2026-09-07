@@ -3,7 +3,7 @@ import CartBadge from "./components/CartBadge";
 import Checkout from "./components/Checkout";
 import FeaturedDishes from "./components/FeaturedDishes";
 import OrderStateDemo from "./components/OrderStateDemo";
-import ThemeButton from "./context/ThemeButton";
+import ThemeButton from "./components/ThemeButton";
 import  "./CSS/style.css"
 
 function App() {

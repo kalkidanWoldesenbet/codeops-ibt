@@ -1,11 +1,16 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import DishList from "./DishList";
 
 function Menu() {
-  const [category, setCategory] = useState("All");
+  const [searchParams, setSearchParams] =
+    useSearchParams();
 
-  const { data, loading, error } = useFetch("/dishes.json");
+  const category = searchParams.get("category") || "All";
+
+  const { data, loading, error } =
+    useFetch("/dishes.json");
 
   const shown = useMemo(() => {
     if (category === "All") {
@@ -16,6 +21,14 @@ function Menu() {
       (dish) => dish.category === category
     );
   }, [data, category]);
+
+  function changeCategory(cat) {
+    if (cat === "All") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: cat });
+    }
+  }
 
   if (loading) {
     return <p className="loading">Loading menu...</p>;
@@ -42,7 +55,7 @@ function Menu() {
         ].map((cat) => (
           <button
             key={cat}
-            onClick={() => setCategory(cat)}
+            onClick={() => changeCategory(cat)}
           >
             {cat}
           </button>
