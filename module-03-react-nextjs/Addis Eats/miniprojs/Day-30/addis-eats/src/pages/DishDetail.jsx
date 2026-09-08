@@ -1,10 +1,22 @@
 import { Link, useParams } from "react-router-dom";
-import { dishes } from "../data";
+import { useEffect, useState } from "react";
 
 function DishDetail() {
   const { id } = useParams();
 
+  const [dishes, setDishes] = useState([]);
+
+  useEffect(() => {
+    fetch("/dishes.json")
+      .then((response) => response.json())
+      .then((data) => setDishes(data));
+  }, []);
+
   const dish = dishes.find((item) => item.id === Number(id));
+
+  if (dishes.length === 0) {
+    return <p>Loading...</p>;
+  }
 
   if (!dish) {
     return (

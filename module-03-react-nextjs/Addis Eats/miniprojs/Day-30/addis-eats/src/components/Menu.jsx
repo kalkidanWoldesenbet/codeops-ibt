@@ -1,6 +1,7 @@
 import { useContext, useState, useMemo } from "react";
 import useFetch from "../hooks/useFetch";
 import { CartContext } from "./CartProvider";
+import { useCartStore } from "../store/cartStore";
 
 function Menu() {
   const [category, setCategory] = useState("All");
@@ -22,6 +23,7 @@ function Menu() {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
+  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <div>
@@ -48,15 +50,8 @@ function Menu() {
             <h3>{dish.name}</h3>
             <p>{dish.price} ETB</p>
 
-            <button
-              onClick={() =>
-                dispatch({
-                  type: "add",
-                  dish,
-                })
-              }
-            >
-              Add
+           <button onClick={() => addItem(dish)}>
+              Add to Cart
             </button>
           </div>
         ))

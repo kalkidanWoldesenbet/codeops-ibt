@@ -1,14 +1,40 @@
+
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { dishes } from "../data";
+import { useCartStore } from "../store/cartStore";
 
 function Menu() {
+  const [dishes, setDishes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const addItem = useCartStore((state) => state.addItem);
 
   const category = searchParams.get("category");
 
-  const filteredDishes = category
-    ? dishes.filter((dish) => dish.category === category)
-    : dishes;
+  useEffect(() => {
+    fetch("/dishes.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to load dishes");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        const dishList = Array.isArray(data) ? data : data.items || [];
+
+        setDishes(dishList);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Unable to load the menu.");
+        setLoading(false);
+      });
+  }, []);
 
   function handleCategoryChange(event) {
     const value = event.target.value;
@@ -18,6 +44,18 @@ function Menu() {
     } else {
       setSearchParams({ category: value });
     }
+  }
+
+  const filteredDishes = category
+    ? dishes.filter((dish) => dish.category === category)
+    : dishes;
+
+  if (loading) {
+    return <p>Loading menu...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   return (
@@ -46,9 +84,23 @@ function Menu() {
             <article key={dish.id}>
               <h3>{dish.name}</h3>
 
-              <p>{dish.price} ETB</p>
+              <p>{dish.description}</p>
 
-              <Link to={`/menu/${dish.id}`}>View Details</Link>
+              <p>
+                <strong>{dish.price} ETB</strong>
+              </p>
+
+              {dish.spicy && <p>🌶️ Spicy</p>}
+
+              <button onClick={() => addItem(dish)}>
+                Add to Cart
+              </button>
+
+              {" "}
+
+              <Link to={`/menu/${dish.id}`}>
+                View Details
+              </Link>
             </article>
           ))}
         </div>
