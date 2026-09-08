@@ -1,71 +1,114 @@
-import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
-import DishList from "./DishList";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useCartStore } from "../store/cartStore";
 
 function Menu() {
-  const [searchParams, setSearchParams] =
-    useSearchParams();
+  const [dishes, setDishes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const category = searchParams.get("category") || "All";
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { data, loading, error } =
-    useFetch("/dishes.json");
+  // Narrow Zustand selector:
+  // Menu only subscribes to addItem
+  const addItem = useCartStore((state) => state.addItem);
 
-  const shown = useMemo(() => {
-    if (category === "All") {
-      return data;
-    }
+  const category = searchParams.get("category");
 
-    return data.filter(
-      (dish) => dish.category === category
-    );
-  }, [data, category]);
+  useEffect(() => {
+    fetch("/dishes.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to load dishes");
+        }
 
-  function changeCategory(cat) {
-    if (cat === "All") {
+        return response.json();
+      })
+      .then((data) => {
+        const dishList = Array.isArray(data)
+          ? data
+          : data.items || [];
+
+        setDishes(dishList);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Unable to load the menu.");
+        setLoading(false);
+      });
+  }, []);
+
+  function handleCategoryChange(event) {
+    const value = event.target.value;
+
+    if (value === "All") {
       setSearchParams({});
     } else {
-      setSearchParams({ category: cat });
+      setSearchParams({ category: value });
     }
   }
 
+  const filteredDishes = category
+    ? dishes.filter((dish) => dish.category === category)
+    : dishes;
+
   if (loading) {
-    return <p className="loading">Loading menu...</p>;
+    return <p>Loading menu...</p>;
   }
 
   if (error) {
-    return (
-      <p className="error">
-        Error: {error.message}
-      </p>
-    );
+    return <p>{error}</p>;
   }
 
   return (
     <section>
-      <h2>Addis Eats Menu</h2>
+      <h2>Our Menu</h2>
 
-      <div className="category-buttons">
-        {[
-          "All",
-          "Main Course",
-          "Side Dish",
-          "Beverage",
-        ].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => changeCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <label htmlFor="category">
+        Category:
+      </label>{" "}
 
-      {shown.length === 0 ? (
+      <select
+        id="category"
+        value={category || "All"}
+        onChange={handleCategoryChange}
+      >
+        <option value="All">All</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Main Course">Main Course</option>
+        <option value="Side Dish">Side Dish</option>
+        <option value="Beverage">Beverage</option>
+      </select>
+
+      {filteredDishes.length === 0 ? (
         <p>No dishes found.</p>
       ) : (
-        <DishList dishes={shown} />
+        <div>
+          {filteredDishes.map((dish) => (
+            <article key={dish.id}>
+              <h3>{dish.name}</h3>
+
+              <p>{dish.description}</p>
+
+              <p>
+                <strong>{dish.price} ETB</strong>
+              </p>
+
+              {dish.spicy && <p>🌶️ Spicy</p>}
+
+              <button onClick={() => addItem(dish)}>
+                Add to Cart
+              </button>
+
+              {" "}
+
+              <Link to={`/menu/${dish.id}`}>
+                View Details
+              </Link>
+            </article>
+          ))}
+        </div>
       )}
     </section>
   );
