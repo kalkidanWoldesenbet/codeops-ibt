@@ -1,0 +1,17 @@
+import { create } from "zustand";
+
+export const useCartStore = create((set) => ({
+  items: [],
+
+  addItem: (dish) =>
+    set((state) => ({
+      items: [...state.items, dish],
+    })),
+
+  remove: (id) =>
+    set((state) => ({
+      items: state.items.filter((dish) => dish.id !== id),
+    })),
+
+  clear: () => set({ items: [] }),
+}));
