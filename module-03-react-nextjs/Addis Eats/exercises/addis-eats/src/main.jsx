@@ -6,7 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 
-import CartProvider from "./components/CartProvider.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import Layout from "./components/Layout.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
@@ -24,7 +23,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <CartProvider>
+      
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
@@ -48,7 +47,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
-        </CartProvider>
+        
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>

@@ -1,10 +1,13 @@
-import { useContext } from "react";
-import { CartContext } from "./CartProvider";
+import { useCartStore } from "../store/cartStore";
 
 function CartBadge() {
-  const { items } = useContext(CartContext);
+  const items = useCartStore((state) => state.items);
 
-  return <span>Cart: {items.length}</span>;
+  return (
+    <span>
+      🛒 {items.length}
+    </span>
+  );
 }
 
 export default CartBadge;
