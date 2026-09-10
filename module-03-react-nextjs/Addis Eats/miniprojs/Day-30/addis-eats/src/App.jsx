@@ -12,7 +12,7 @@ import DishDetail from "./pages/DishDetail";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
-import { AuthProvider } from "./Context/AuthContext";
+import { AuthProvider } from "./Context/AuthContext"
 import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {

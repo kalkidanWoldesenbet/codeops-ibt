@@ -1,40 +1,28 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  function handleLogin() {
+    login();
 
-  function handleLogin(event) {
-    event.preventDefault();
-
-    localStorage.setItem("isSignedIn", "true");
+    const from = location.state?.from?.pathname || "/";
 
     navigate(from, { replace: true });
   }
 
   return (
     <section>
-      <h2>Login</h2>
+      <h2>Sign In</h2>
 
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" required />
-        </div>
+      <p>Please sign in to continue.</p>
 
-        <br />
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input id="password" type="password" required />
-        </div>
-
-        <br />
-
-        <button type="submit">Login</button>
-      </form>
+      <button onClick={handleLogin}>
+        Sign In
+      </button>
     </section>
   );
 }

@@ -1,19 +1,26 @@
-import { useContext, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import useFetch from "../hooks/useFetch";
-import { CartContext } from "./CartProvider";
 import { useCartStore } from "../store/cartStore";
 
 function Menu() {
   const [category, setCategory] = useState("All");
-  const { data, loading, error } = useFetch("/dishes.json");
-  const { dispatch } = useContext(CartContext);
+
+  const { data, loading, error } =
+    useFetch("/dishes.json");
+
+  // All hooks must be before conditional returns
+  const addItem = useCartStore(
+    (state) => state.addItem
+  );
 
   const shown = useMemo(() => {
     if (category === "All") {
       return data;
     }
 
-    return data.filter((dish) => dish.category === category);
+    return data.filter(
+      (dish) => dish.category === category
+    );
   }, [data, category]);
 
   if (loading) {
@@ -23,23 +30,25 @@ function Menu() {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <div>
       <h2>Addis Eats</h2>
 
       <div>
-        {["All", "Main Course", "Side Dish", "Beverage"].map(
-          (cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-            >
-              {cat}
-            </button>
-          )
-        )}
+        {[
+          "All",
+          "Main Course",
+          "Side Dish",
+          "Beverage",
+        ].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
       {shown.length === 0 ? (
@@ -50,7 +59,7 @@ function Menu() {
             <h3>{dish.name}</h3>
             <p>{dish.price} ETB</p>
 
-           <button onClick={() => addItem(dish)}>
+            <button onClick={() => addItem(dish)}>
               Add to Cart
             </button>
           </div>
