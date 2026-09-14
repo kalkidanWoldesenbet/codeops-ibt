@@ -4,6 +4,7 @@ import Checkout from "./components/Checkout";
 import FeaturedDishes from "./components/FeaturedDishes";
 import OrderStateDemo from "./components/OrderStateDemo";
 import ThemeButton from "./components/ThemeButton";
+import ErrorBoundary from "./components/ErrorBoundary";
 import  "./CSS/style.css"
 
 function App() {
@@ -21,7 +22,9 @@ function App() {
       <main>
         <FeaturedDishes />
 
-        <Menu />
+        <ErrorBoundary fallback="The menu could not be loaded. Please try again.">
+          <Menu />
+        </ErrorBoundary>
 
         <Checkout />
 
