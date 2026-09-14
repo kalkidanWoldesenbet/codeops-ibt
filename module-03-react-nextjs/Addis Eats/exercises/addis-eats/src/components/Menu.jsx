@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
+import DishCard from "./DishCard";
 
 function Menu() {
   const [dishes, setDishes] = useState([]);
@@ -86,27 +87,11 @@ function Menu() {
       ) : (
         <div>
           {filteredDishes.map((dish) => (
-            <article key={dish.id}>
-              <h3>{dish.name}</h3>
-
-              <p>{dish.description}</p>
-
-              <p>
-                <strong>{dish.price} ETB</strong>
-              </p>
-
-              {dish.spicy && <p>🌶️ Spicy</p>}
-
-              <button onClick={() => addItem(dish)}>
-                Add to Cart
-              </button>
-
-              {" "}
-
-              <Link to={`/menu/${dish.id}`}>
-                View Details
-              </Link>
-            </article>
+            <DishCard
+              key={dish.id}
+              dish={dish}
+              onAdd={addItem}
+            />
           ))}
         </div>
       )}

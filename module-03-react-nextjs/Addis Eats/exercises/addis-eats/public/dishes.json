@@ -3,7 +3,8 @@
     "id": 1,
     "name": "Doro Wot",
     "price": 400,
-    "category": "Main Course"
+    "category": "Main Course",
+    "spicy":true
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "id": 3,
     "name": "Shiro",
     "price": 250,
-    "category": "Main Course"
+    "category": "Main Course",
+    "spicy": true
   },
   {
     "id": 4,
