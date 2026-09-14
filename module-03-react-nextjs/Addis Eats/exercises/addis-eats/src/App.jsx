@@ -1,11 +1,15 @@
 import Menu from "./components/Menu";
 import CartBadge from "./components/CartBadge";
-import Checkout from "./components/Checkout";
+
 import FeaturedDishes from "./components/FeaturedDishes";
 import OrderStateDemo from "./components/OrderStateDemo";
 import ThemeButton from "./components/ThemeButton";
 import ErrorBoundary from "./components/ErrorBoundary";
 import  "./CSS/style.css"
+import { lazy, Suspense } from "react";
+
+const Checkout = lazy(() => import("./components/Checkout"));
+const Receipt = lazy(() => import("./components/Receipt"));
 
 function App() {
   return (
@@ -26,8 +30,14 @@ function App() {
           <Menu />
         </ErrorBoundary>
 
-        <Checkout />
+        <Suspense fallback={<p>Loading checkout...</p>} >
+          <Checkout />
+        </Suspense>
 
+        <Suspense fallback={<p>Loading receipt...</p>}>
+          <Receipt />
+        </Suspense>
+        
         <OrderStateDemo />
       </main>
     </>
