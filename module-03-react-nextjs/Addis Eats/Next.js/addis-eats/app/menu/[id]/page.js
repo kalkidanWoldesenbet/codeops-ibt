@@ -1,8 +1,10 @@
-export default function MenuPage() {
+export default async function DishPage({ params }) {
+  const { id } = await params;
+
   return (
     <main>
-      <h1>Menu</h1>
-      <p>Browse our dishes.</p>
+      <h1>Dish Details</h1>
+      <p>Dish ID: {id}</p>
     </main>
   );
 }
