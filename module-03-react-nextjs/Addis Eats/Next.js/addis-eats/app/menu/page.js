@@ -3,7 +3,8 @@ import DishList from "./DishList";
 import CategoryBar from "./CategoryBar";
 import MenuNavigation from "./MenuNavigation";
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return (
     <main>
       <h1>Menu</h1>

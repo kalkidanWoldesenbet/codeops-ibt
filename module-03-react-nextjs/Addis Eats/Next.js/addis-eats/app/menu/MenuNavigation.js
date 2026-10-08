@@ -16,6 +16,7 @@ export default function MenuNavigation() {
   return (
     <div>
       <button onClick={goToCart}>Go to Cart</button>
+      <br/>
       <button onClick={goToCheckout}>Go to Checkout</button>
     </div>
   );
