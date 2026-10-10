@@ -2,6 +2,8 @@ import Link from "next/link";
 import DishList from "./DishList";
 import CategoryBar from "./CategoryBar";
 import MenuNavigation from "./MenuNavigation";
+import { Suspense } from "react";
+import { DishListFallback } from "./DishListFallback";
 
 export const revalidate = 60; // Revalidate this page every 60 seconds
 export default async function MenuPage() {
@@ -19,7 +21,9 @@ export default async function MenuPage() {
       </nav>
 
       <CategoryBar />
-      <DishList />
+      <Suspense fallback={<DishListFallback />}>
+        <DishList />
+      </Suspense>
       <MenuNavigation />
       <Link href="/menu/1">View Doro Wot</Link>
 
