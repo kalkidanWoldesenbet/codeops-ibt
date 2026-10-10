@@ -3,6 +3,7 @@ import DishList from "./DishList";
 import CategoryBar from "./CategoryBar";
 import MenuNavigation from "./MenuNavigation";
 
+export const revalidate = 60; // Revalidate this page every 60 seconds
 export default async function MenuPage() {
   await new Promise((resolve) => setTimeout(resolve, 2000));
   return (
