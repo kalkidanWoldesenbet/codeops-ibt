@@ -1,3 +1,5 @@
+import MenuCounter from "./MenuCounter";
+
 export default function MenuLayout({ children }) {
   return (
     <div className= "menu-layout">
@@ -9,6 +11,8 @@ export default function MenuLayout({ children }) {
                 <li>Desserts</li>
                 <li>Beverages</li>
             </ul>
+
+            <MenuCounter />
         </aside>
         <section className="menu-content">
             {children}

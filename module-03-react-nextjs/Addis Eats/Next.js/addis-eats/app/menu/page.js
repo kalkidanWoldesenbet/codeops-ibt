@@ -20,6 +20,8 @@ export default async function MenuPage() {
       <CategoryBar />
       <DishList />
       <MenuNavigation />
+      <Link href="/menu/1">View Doro Wot</Link>
+
     </main>
   );
 }
