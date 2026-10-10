@@ -44,3 +44,45 @@ body {
 .site-footer p {
   margin: 0;
 }
+
+.menu-layout{
+  display: grid;
+  grid-template-columns: repeat 220px 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-sidebar{
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e5d5c8;
+  border-radius: 8px;
+  align-self: start;
+}
+
+.category-sidebar h2 {
+  margin-top: 0;
+  color: #8b2e16;
+}
+
+.category-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.category-sidebar li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-content {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .menu-layout {
+    grid-template-columns: 1fr;
+  }
+}
