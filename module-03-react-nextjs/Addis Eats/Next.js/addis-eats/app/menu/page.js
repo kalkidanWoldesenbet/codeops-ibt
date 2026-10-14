@@ -1,6 +1,7 @@
 import Link from "next/link";
 import DishList from "./DishList";
 import CategoryBar from "./CategoryBar";
+import FilterShell from "./FilterShell";
 import MenuNavigation from "./MenuNavigation";
 
 async function getDishes() {
@@ -27,7 +28,9 @@ export default async function MenuPage() {
       </nav>
 
       <CategoryBar />
-      <DishList dishes={dishes} />
+        <FilterShell >
+         <DishList dishes={dishes} />
+        </FilterShell>
       <MenuNavigation />
     </main>
   );
