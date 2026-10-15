@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### `/menu` First Load JavaScript Comparison
+
+| Measurement | Result |
+|---|---|
+| Before optimization | Not recoverable from the available baseline artifacts |
+| After optimization | Official route-specific First Load JS figure not available in the current build output |
+| Shared JavaScript chunks | 431.76 KiB total |
+
+**Note:** The 431.76 KiB figure is the combined size of shared JavaScript chunks, not the official First Load JS size for `/menu`. A valid before-and-after comparison requires building the baseline and optimized versions using the same measurement method.
