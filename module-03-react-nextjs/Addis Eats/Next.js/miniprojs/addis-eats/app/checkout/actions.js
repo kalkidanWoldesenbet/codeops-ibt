@@ -4,11 +4,20 @@ import { revalidatePath } from "next/cache";
 import { randomUUID } from "node:crypto";
 import { dishes } from "@/data/dishes";
 import { orderSchema } from "@/lib/schemas/orderSchema";
+import { getSession } from "@/lib/auth/session";
 
 export async function placeOrder(_previousState, formData) {
   const customerName = formData.get("customerName");
   const phone = formData.get("phone");
+  const session = await getSession();
 
+    if (!session) {
+      return {
+        success: false,
+        message: "Please sign in to place an order.",
+        fieldErrors: {},
+      };
+    }
   let items;
 
   try {

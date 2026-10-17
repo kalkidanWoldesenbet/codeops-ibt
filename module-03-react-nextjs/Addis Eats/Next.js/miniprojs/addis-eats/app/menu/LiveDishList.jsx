@@ -16,24 +16,32 @@ export default function LiveDishList() {
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
+
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search.trim()), 400);
     return () => clearTimeout(timer);
   }, [search]);
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
+  const currentSearch = searchParams.get("search") || "";
 
-    if (debouncedSearch) params.set("search", debouncedSearch);
-    else params.delete("search");
+  if (currentSearch === debouncedSearch) return;
 
-    params.delete("page");
+  const params = new URLSearchParams(searchParams.toString());
 
-    const nextUrl = params.toString() ? `${pathname}?${params}` : pathname;
-    const currentUrl = `${pathname}?${searchParams.toString()}`;
+  if (debouncedSearch) {
+    params.set("search", debouncedSearch);
+  } else {
+    params.delete("search");
+  }
 
-    if (nextUrl !== currentUrl) router.replace(nextUrl, { scroll: false });
-  }, [debouncedSearch, pathname, router, searchParams]);
+  params.delete("page");
+
+  const query = params.toString();
+  router.replace(query ? `${pathname}?${query}` : pathname, {
+    scroll: false,
+  });
+}, [debouncedSearch, pathname, router, searchParams]);
 
   const { data, error, isPending, isPlaceholderData } = useQuery({
     queryKey: ["dishes", { search: debouncedSearch, page }],
