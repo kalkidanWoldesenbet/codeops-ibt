@@ -1,19 +1,5 @@
-
 import { Suspense } from "react";
-import DishList from "./DishList";
-
-function DishListFallback() {
-  return (
-    <p className="animate-pulse text-gray-500">
-      Loading dishes...
-    </p>
-  );
-}
-
-async function SlowDishList() {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  return <DishList />;
-}
+import LiveDishList from "./LiveDishList";
 
 export default function MenuPage() {
   return (
@@ -23,8 +9,8 @@ export default function MenuPage() {
         Discover your favorite Ethiopian dishes.
       </p>
 
-      <Suspense fallback={<DishListFallback />}>
-        <SlowDishList />
+      <Suspense fallback={<p className="text-gray-500">Loading menu...</p>}>
+        <LiveDishList />
       </Suspense>
     </main>
   );
