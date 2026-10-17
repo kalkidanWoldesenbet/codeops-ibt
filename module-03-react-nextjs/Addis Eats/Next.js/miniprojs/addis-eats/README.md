@@ -44,3 +44,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | Shared JavaScript chunks | 431.76 KiB total |
 
 **Note:** The 431.76 KiB figure is the combined size of shared JavaScript chunks, not the official First Load JS size for `/menu`. A valid before-and-after comparison requires building the baseline and optimized versions using the same measurement method.
+
+### Network Tab Testing
+
+When typing in the menu search box, the search is debounced by 400 ms, so a request is sent only after typing pauses rather than for every keystroke. For example, typing five characters quickly should trigger one search request after the pause. The Network tab shows the request to `/api/dishes?search=...&page=...`, and React Query caches results using the search term and page number as the query key. When changing pages or search terms, previous results remain visible while new data loads, preventing the list from flashing empty.
