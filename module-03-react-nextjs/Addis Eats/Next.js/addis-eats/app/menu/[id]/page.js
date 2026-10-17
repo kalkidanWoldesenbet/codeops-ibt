@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { dishes } from "@/data/dishes";
+import { dishes } from "@/app/data/dishes";
 
 export default async function DishPage({ params }) {
   const { id } = await params;
