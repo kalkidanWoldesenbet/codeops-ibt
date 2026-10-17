@@ -1,4 +1,6 @@
 import "./globals.css";
+import Providers from "./providers";
+import SignOutButton from "@/app/components/SignOutButton";
 
 export const metadata = {
 title: "Addis Eats",
@@ -16,12 +18,14 @@ export default function RootLayout({ children }) {
               <a href="/menu">Menu</a>
               <a href="/cart">Cart</a>
               <a href="/checkout">Checkout</a>
+              <SignOutButton />
             </nav>
           </div>
         </header>
 
+        <Providers>
         {children}
-
+        </Providers>
         <footer className="mt-12 bg-gray-900 px-6 py-5 text-center text-white">
           <p>© 2026 Addis Eats. Ethiopian food, made with love.</p>
         </footer>

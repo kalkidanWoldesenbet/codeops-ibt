@@ -1,13 +1,41 @@
 import { NextResponse } from "next/server";
 import { orderSchema } from "@/lib/schemas/orderSchema";
 import { dishes } from "@/data/dishes";
+import { getSession } from "@/lib/auth/session";
 
 // Temporary in-memory storage for development.
 const orders = globalThis.orders ?? [];
 globalThis.orders = orders;
 
+export async function GET() {
+  const session = await getSession();
+
+  if (!session) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  const orders = globalThis.orders ?? [];
+
+  return NextResponse.json({
+    success: true,
+    data: orders.filter((order) => order.userId === session.userId),
+  });
+}
+
 export async function POST(request) {
   try {
+    const session = await getSession();
+
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const result = orderSchema.safeParse(body);
 
