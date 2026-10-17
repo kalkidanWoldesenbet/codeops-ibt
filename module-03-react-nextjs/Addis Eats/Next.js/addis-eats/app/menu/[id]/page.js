@@ -1,23 +1,8 @@
 import { notFound } from "next/navigation";
-
-const dishes = [
-  {
-    id: "1",
-    name: "Doro Wot",
-  },
-  {
-    id: "2",
-    name: "Tibs",
-  },
-  {
-    id: "3",
-    name: "Shiro",
-  },
-];
+import { dishes } from "@/app/data/dishes";
 
 export default async function DishPage({ params }) {
   const { id } = await params;
-
   const dish = dishes.find((dish) => dish.id === id);
 
   if (!dish) {

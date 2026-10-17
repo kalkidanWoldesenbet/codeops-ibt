@@ -1,10 +1,20 @@
 import Link from "next/link";
 import DishList from "./DishList";
 import CategoryBar from "./CategoryBar";
+import FilterShell from "./FilterShell";
 import MenuNavigation from "./MenuNavigation";
 
+async function getDishes() {
+  return [
+    { id: "1", name: "Doro Wot" },
+    { id: "2", name: "Tibs" },
+    { id: "3", name: "Shiro" },
+  ];
+}
+
 export default async function MenuPage() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const dishes = await getDishes();
+
   return (
     <main>
       <h1>Menu</h1>
@@ -18,7 +28,9 @@ export default async function MenuPage() {
       </nav>
 
       <CategoryBar />
-      <DishList />
+        <FilterShell >
+         <DishList dishes={dishes} />
+        </FilterShell>
       <MenuNavigation />
     </main>
   );
