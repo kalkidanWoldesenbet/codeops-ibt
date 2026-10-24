@@ -1,6 +1,7 @@
 import "./globals.css";
 import Providers from "./providers";
 import SignOutButton from "@/app/components/SignOutButton";
+import Link from "next/link";
 
 export const metadata = {
 title: "Addis Eats",
@@ -14,10 +15,10 @@ export default function RootLayout({ children }) {
         <header className="bg-orange-600 px-6 py-5 text-white shadow-md"> 
           <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4"> <h1 className="text-2xl font-bold">Addis Eats</h1>
             <nav className="flex gap-5 font-medium">
-              <a href="/">Home</a>
-              <a href="/menu">Menu</a>
-              <a href="/cart">Cart</a>
-              <a href="/checkout">Checkout</a>
+              <Link href="/">Home</Link>
+              <Link href="/menu">Menu</Link>
+              <Link href="/cart">Cart</Link>
+              <Link href="/checkout">Checkout</Link>
               <SignOutButton />
             </nav>
           </div>
