@@ -6,6 +6,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { fetcher } from "@/lib/fetcher";
 import AddToOrderButton from "@/app/components/AddToOrderButton";
+import Image from "next/image";
 
 export default function LiveDishList() {
   const router = useRouter();
@@ -91,6 +92,15 @@ export default function LiveDishList() {
                   <h2 className="mb-2 text-xl font-semibold">{dish.name}</h2>
                   <p className="mb-4 text-gray-600">{dish.description}</p>
                   <p className="mb-4 font-bold">{dish.price} ETB</p>
+                 <Image
+                    src={dish.image}
+                    alt={`${dish.name}, an Ethiopian dish`}
+                    width={800}
+                    height={600}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading={dish.id === dishes[0]?.id ? "eager" : "lazy"}
+                    className="mb-4 h-48 w-full rounded-lg object-cover"
+                  />
                   <div className="flex flex-wrap gap-3">
                     <Link
                       href={`/menu/${dish.id}`}
