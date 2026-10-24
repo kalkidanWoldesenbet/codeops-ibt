@@ -29,14 +29,14 @@ Record a new Lighthouse Mobile report using a production build.
 
 | Metric | Before | After |
 |---|---:|---:|
-| Performance | 94 | 81 |
-| Accessibility | 95 | 95 |
+| Performance | 94 | 87 |
+| Accessibility | 95 | 96 |
 | Best Practices | 100 | 100 |
 | SEO | 100 | 100 |
-| FCP | 0.8 s | 1.0s |
-| LCP | 2.7 s | 1.5s |
-| TBT | 70 ms | 790ms |
-| CLS | 0.092 | 0 |
-| Speed Index | 1.1 s | 2.2s |
+| FCP | 0.8 s | 0.9 s |
+| LCP | 2.7 s | 3.2 s |
+| TBT | 70 ms | 240ms |
+| CLS | 0.092 | 0.092 |
+| Speed Index | 1.1 s | 1.3s |
 
 
