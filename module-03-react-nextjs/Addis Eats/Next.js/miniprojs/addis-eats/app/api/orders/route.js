@@ -84,6 +84,7 @@ export async function POST(request) {
     const order = {
       id: crypto.randomUUID(),
       ...result.data,
+      userId: session.userId,
       items: orderItems,
       total: orderItems.reduce(
         (sum, item) => sum + item.price * item.quantity,

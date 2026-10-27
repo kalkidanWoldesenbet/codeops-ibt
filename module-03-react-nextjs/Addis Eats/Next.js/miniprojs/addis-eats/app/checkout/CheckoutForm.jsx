@@ -4,6 +4,7 @@ import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/store/cartStore";
 import { placeOrder } from "./actions";
+import { neighbourhoods } from "@/lib/schemas/orderSchema";
 
 const initialState = {
   success: false,
@@ -114,6 +115,29 @@ export default function CheckoutForm() {
           <p key={error} className="mt-1 text-sm text-red-600">
             {error}
           </p>
+        ))}
+      </div>
+
+      <div>
+        <label htmlFor="neighbourhood" className="mb-1 block font-medium">
+          Delivery neighbourhood
+        </label>
+        <select
+          id="neighbourhood"
+          name="neighbourhood"
+          required
+          defaultValue=""
+          className="w-full rounded-lg border p-3"
+        >
+          <option value="" disabled>Select your neighbourhood</option>
+          {neighbourhoods.map((neighbourhood) => (
+            <option key={neighbourhood} value={neighbourhood}>
+              {neighbourhood}
+            </option>
+          ))}
+        </select>
+        {state.fieldErrors?.neighbourhood?.map((error) => (
+          <p key={error} className="mt-1 text-sm text-red-600">{error}</p>
         ))}
       </div>
 

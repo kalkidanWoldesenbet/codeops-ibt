@@ -33,6 +33,7 @@ export async function placeOrder(_previousState, formData) {
   const result = orderSchema.safeParse({
     customerName,
     phone,
+    neighbourhood: formData.get("neighbourhood"),
     items: Array.isArray(items)
       ? items.map((item) => ({
           dishId: String(item.dishId ?? ""),
@@ -74,8 +75,10 @@ export async function placeOrder(_previousState, formData) {
 
   const order = {
     id: randomUUID(),
+    userId: session.userId,
     customerName: result.data.customerName,
     phone: result.data.phone,
+    neighbourhood: result.data.neighbourhood,
     items: orderItems,
     total: orderItems.reduce(
       (sum, item) => sum + item.price * item.quantity,

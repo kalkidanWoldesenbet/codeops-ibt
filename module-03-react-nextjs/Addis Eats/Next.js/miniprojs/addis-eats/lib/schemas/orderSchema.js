@@ -1,11 +1,22 @@
 import { z } from "zod";
 
+export const neighbourhoods = [
+  "Bole",
+  "Piazza",
+  "Kazanchis",
+  "Megenagna",
+  "Lideta",
+];
+
 export const orderSchema = z.object({
   customerName: z.string().trim().min(2, "Name must be at least 2 characters."),
   phone: z
     .string()
     .trim()
     .regex(/^\+?[0-9\s-]{9,15}$/, "Enter a valid phone number."),
+  neighbourhood: z.enum(neighbourhoods, {
+    error: "Please select a neighbourhood.",
+  }),
   items: z
     .array(
       z.object({
