@@ -1,14 +1,15 @@
+
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "@/lib/fetcher";
 
-export default function OrdersClient() {
+export default function OrdersClient({ initialData }) {
   const { data, error, isPending } = useQuery({
     queryKey: ["orders"],
     queryFn: () => fetcher("/api/orders"),
     refetchInterval: 5000,
-    placeholderData: { success: true, data: [] },
+    initialData,
   });
 
   if (isPending) return <p>Loading orders...</p>;

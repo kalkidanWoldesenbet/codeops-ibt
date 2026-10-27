@@ -7,6 +7,9 @@ import Link from "next/link";
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://your-production-domain.com";
 
+if (!siteUrl) {
+  throw new Error("NEXT_PUBLIC_SITE_URL must be configured.");
+}
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
