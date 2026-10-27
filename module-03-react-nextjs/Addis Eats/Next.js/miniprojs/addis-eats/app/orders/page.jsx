@@ -89,6 +89,7 @@ export default async function OrdersPage({ searchParams }) {
                   <th scope="col" className="p-3">Customer</th>
                   <th scope="col" className="p-3">Status</th>
                   <th scope="col" className="p-3 text-right">Total (ETB)</th>
+                  <th scope="col" className="p-3">Tracking</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,6 +102,11 @@ export default async function OrdersPage({ searchParams }) {
                     <td className="p-3">{order.customerName}</td>
                     <td className="p-3">{order.status}</td>
                     <td className="p-3 text-right tabular-nums">{etb.format(order.total)}</td>
+                    <td className="p-3">
+                      <Link className="underline" href={`/tracking?id=${encodeURIComponent(order.id)}`}>
+                        Track delivery
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
